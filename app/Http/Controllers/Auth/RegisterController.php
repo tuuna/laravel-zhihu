@@ -62,10 +62,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatars' => '/images/avatars/default.png',
+            'confirmation_token' => str_random(40),
             'password' => bcrypt($data['password']),
         ]);
+
+        $this->sendVerifyEmailTo($user);
+        return $user;
     }
+
+    private function sendVerifyEmailTo($user)
+    {
+        $bind_data = ['url' => 'http://naux.me'];
+        $template = new SendCloudTemplate('模板名', $bind_data);
+
+        Mail::raw($template, function ($message) {
+            $message->from('us@example.com', 'Laravel');
+
+            $message->to('foo@example.com')->cc('bar@example.com');
+        });
+    }
+
+
 }
