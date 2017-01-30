@@ -19,5 +19,6 @@ class EmailController extends Controller
 
             $message->getSwiftMessage()->setBody($template);
         });
+        return view('login');
     }
 }
