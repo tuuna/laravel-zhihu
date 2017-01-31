@@ -9,9 +9,9 @@ class EmailController extends Controller
     public function verify()
     {
         Mail::send('随便传个空view', [], function ($message) {
-            $message->from('us@example.com', 'Laravel');
+            $message->from('lj550566181@163.com', 'Laravel');
 
-            $message->to('foo@example.com')->cc('bar@example.com');
+            $message->to('')->cc('bar@example.com');
 
             // 模板变量
             $bind_data = ['url' => 'http://naux.me'];
