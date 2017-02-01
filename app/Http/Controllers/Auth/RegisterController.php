@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -76,14 +77,18 @@ class RegisterController extends Controller
 
     private function sendVerifyEmailTo($user)
     {
-        $bind_data = ['url' => 'http://naux.me'];
-        $template = new SendCloudTemplate('模板名', $bind_data);
-
-        Mail::raw($template, function ($message) {
-            $message->from('us@example.com', 'Laravel');
-
-            $message->to('foo@example.com')->cc('bar@example.com');
-        });
+        $data = [
+            'url' => route('email.verify',['token' => $user->confirmation_token]),
+            'name' => $user->name
+        ];
+        Mail::send(
+            "emails.test",
+            $data,
+            function($message) use($user) {
+                $message->to($user->email)
+                        ->subject("这是一封最终的测试邮件");
+            }
+        );
     }
 
 
