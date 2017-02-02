@@ -10,11 +10,26 @@
                     <div class="panel-body">
                         <form action="/questions" method="post">
                             {!! csrf_field() !!}
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
                                 <label for="title">标题</label>
-                                <input type="text" name="title" id="title" class="form-control" placeholder="输入标题">
+                                <input type="text" name="title" id="title" class="form-control" placeholder="输入标题" value="{{old('title')}}">
+                                @if ($errors->has('title'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <script id="container" name="content" type="text/plain"></script>
+                            <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
+                                <script id="container" name="content" type="text/plain">
+                                    {!! old('body') !!}
+
+                                </script>
+                                @if ($errors->has('body'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('body') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
 
                             <button class="btn btn-success pull-right" type="submit">提交问题</button>
                         </form>
