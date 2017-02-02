@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,14 +36,13 @@ class QuestionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreQuestionRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+
+    public function store(StoreQuestionRequest $request)
     {
-        $rules = [
+        /*$rules = [
             'title' => 'required|min:2|max:196',
             'body' => 'required|min:10'
         ];
@@ -46,11 +52,11 @@ class QuestionController extends Controller
             'body.required' => '内容太少了'
         ];
 
-        $this->validate($request,$rules,$message);
+        $this->validate($request,$rules,$message);*/
 
         $data = [
             'title' => $request->get('title'),
-            'body' => $request->get('content'),
+            'body' => $request->get('body'),
             'user_id' => Auth::id()
         ];
         $question = Question::create($data);
