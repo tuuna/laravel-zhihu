@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -38,7 +38,7 @@ class QuestionController extends Controller
     {
         $data = [
             'title' => $request->get('title'),
-            'body' => $request->get('body'),
+            'body' => $request->get('content'),
             'user_id' => Auth::id()
         ];
         $question = Question::create($data);
@@ -54,7 +54,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Question::find($id);
+        return view('questions.show',['question' => $data]);
     }
 
     /**

@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('email/verify/{token}',['as' => 'email.verify', 'uses' => 'EmailController@verify']);
 
-Route::resource('questions','QuestionController',['name' => [
+Route::resource('questions','QuestionController',['names' => [
     'create' => 'question.create',
-    'show' => 'question.show'
+    'show' => 'question.show',
 ]]);
