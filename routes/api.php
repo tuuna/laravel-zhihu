@@ -1,5 +1,6 @@
 <?php
 
+use App\Topic;
 use Illuminate\Http\Request;
 
 /*
@@ -15,4 +16,13 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('api')->get('/topics',
+    function (Request $request) {
+        $topics = Topic::select(['id','name'])
+                    ->where('name','like',
+                            '%'.$request->query('q').'%')
+                    ->get();
+        return $topics;
 });

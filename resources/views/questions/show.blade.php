@@ -12,4 +12,10 @@
             </div>
         </div>
     </div>
+
 @endsection
+<style>
+    .panel-body img {
+        width:100%;
+    }
+</style>
