@@ -90,19 +90,30 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = $this->questionRepository->byIdWithTopics($id);
+        if(!Auth::user()->owns($question)) {
+            back();
+        }
+        return view('questions.edit',['question' => $question]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreQuestionRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, $id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+
+        $question->update([
+            'title' => $request->get('title'),
+            'body' => $request->get('body')
+        ]);
+
+        $question->topics()->sync($topics);
+        return redirect()->route('question.show',[$question->id]);
     }
 
     /**

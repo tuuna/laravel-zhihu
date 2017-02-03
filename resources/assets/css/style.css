@@ -11,6 +11,7 @@ a.topic {
     display: inline-block;
     white-space:nowrap;
     cursor: pointer;
+    float: right;
 }
 
 a.topic:hover {
