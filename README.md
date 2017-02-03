@@ -2,6 +2,9 @@
 知乎仿站
 使用Laravel5.4+Vue
 
+- 使用Select2来完成标签联想
+- 因为Laravel 5.3之后路由是单独放在Route文件夹中的，并且分为`web.php`以及`api.php`等，相应的文件中定义的路由不一样
+
 **在Laravel 5.4中需要注意的是npm或者cnpm的版本，
 版本较低(如4.0.x)等很容易出现错误**
 
@@ -23,3 +26,6 @@ $ npm install npm@latest -g
 或者使用镜像的朋友
 $ cnpm install cnpm@latest -g
 ```
+
+
+
