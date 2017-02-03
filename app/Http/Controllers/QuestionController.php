@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Question;
+use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreQuestionRequest;
 
 class QuestionController extends Controller
 {
+    protected $questionRepository;
 
-    public function __construct()
+    public function __construct(QuestionRepository $questionRepository)
     {
         $this->middleware('auth')->except(['index','show']);
+        $this->questionRepository = $questionRepository;
     }
 
     /**
@@ -54,13 +56,16 @@ class QuestionController extends Controller
 
         $this->validate($request,$rules,$message);*/
 
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         $data = [
             'title' => $request->get('title'),
             'body' => $request->get('body'),
             'user_id' => Auth::id()
         ];
-        $question = Question::create($data);
+        $question = $this->questionRepository->create($data);
 
+//        $question = Question::with('topics')->findOrfail($id);
+        $question->topics()->attach($topics);
         return redirect()->route('question.show',[$question->id]);
     }
 
@@ -72,7 +77,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $data = Question::find($id);
+//        $data = Question::where('id',$id)->with('topics')->first();
+        $data = $this->questionRepository->byIdWithTopics($id);
         return view('questions.show',['question' => $data]);
     }
 
@@ -109,4 +115,6 @@ class QuestionController extends Controller
     {
         //
     }
+
+
 }
