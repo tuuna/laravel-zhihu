@@ -19,7 +19,7 @@ class QuestionRepository
 
     public function create(array $attribute)
     {
-        return Question::created($attribute);
+        return Question::create($attribute);
     }
 
     public function byId($id)
@@ -38,4 +38,11 @@ class QuestionRepository
             return $newTopic->id;
         })->toArray();
     }
+
+    public function getQuestionsFeed()
+    {
+        return Question::published()->latest('updated_at')->with('user')->get();
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Question;
 use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = $this->questionRepository->getQuestionsFeed();
+        return view('questions.index',['questions' => $questions]);
     }
 
     /**
@@ -48,14 +50,11 @@ class QuestionController extends Controller
             'title' => 'required|min:2|max:196',
             'body' => 'required|min:10'
         ];
-
         $message = [
             'title.required' => '标题不能为空',
             'body.required' => '内容太少了'
         ];
-
         $this->validate($request,$rules,$message);*/
-
         $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         $data = [
             'title' => $request->get('title'),
@@ -63,8 +62,6 @@ class QuestionController extends Controller
             'user_id' => Auth::id()
         ];
         $question = $this->questionRepository->create($data);
-
-//        $question = Question::with('topics')->findOrfail($id);
         $question->topics()->attach($topics);
         return redirect()->route('question.show',[$question->id]);
     }
