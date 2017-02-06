@@ -19,6 +19,7 @@ require('./select2.min.js');
  */
 
 window.Vue = require('vue');
+require('vue-resource');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

@@ -51,6 +51,7 @@ class User extends Authenticatable
         return  $this->follows()->where('question_id',$question)->count()? :0;
     }
 
+
     public function answers()
     {
         return $this->hasMany(Answer::class);
