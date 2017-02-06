@@ -12,9 +12,9 @@ use App\Topic;
  */
 class QuestionRepository
 {
-    public function byIdWithTopics($id)
+    public function byIdWithTopicsAndAnswers($id)
     {
-        return Question::with('topics')->findOrfail($id);
+        return Question::with(['topics','answers'])->findOrfail($id);
     }
 
     public function create(array $attribute)

@@ -75,7 +75,7 @@ class QuestionController extends Controller
     public function show($id)
     {
 //        $data = Question::where('id',$id)->with('topics')->first();
-        $data = $this->questionRepository->byIdWithTopics($id);
+        $data = $this->questionRepository->byIdWithTopicsAndAnswers($id);
         return view('questions.show',['question' => $data]);
     }
 
