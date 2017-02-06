@@ -14,7 +14,8 @@ class EmailController extends Controller
 
         if(is_null($user)) {
             flash('邮箱验证失败','danger');
-            return redirect('/');
+            abort(403,'Forbidden');
+//            return redirect('/');
         }
 
         $user -> is_active = 1;
@@ -23,6 +24,6 @@ class EmailController extends Controller
 
         Auth::login($user);
         flash('邮箱验证成功','success');
-        return redirect('/home');
+        return redirect('/');
     }
 }
