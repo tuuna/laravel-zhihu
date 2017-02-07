@@ -6,7 +6,7 @@
     export default{
         props:['question'],
         mounted() {
-            this.$http.post('/api/question/follower',
+            this.$http.post('/api/user/followers',
             { 'question':this.question })
                 .then(response => {
                     this.followed = response.data.followed
@@ -20,12 +20,12 @@
         computed: {
             text() {
                 return this.followed ?
-                            '已关注' : '点击关注'
+                            '已关注' : '关注他'
             }
         },
         methods:{
             follow() {
-                this.$http.post('/api/question/follow',{ 'question':this.question })
+                this.$http.post('/api/user/follow',{ 'question':this.question })
                     .then(response => {
                         this.followed = response.data.followed
                     })

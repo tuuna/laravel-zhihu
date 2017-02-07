@@ -31,14 +31,14 @@
             <div class="div col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading question-follow">
-                        <h2>{{ $question->followers_count }}</h2>
+                        <h2 class="con">{{ $question->followers_count }}</h2>
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
                         {{--<a href="/questions/{{$question->id}}/follow"
-                           class="btn btn-default {{ Auth::user()->followed($question->id) ? 'btn-success' : '' }}">
-                            {{ Auth::user()->followed($question->id) ? '取消关注'  : '关注'}}
-                        </a>--}}
+                               class="btn btn-default {{ Auth::user()->followed($question->id) ? 'btn-success' : '' }}">
+                        {{ Auth::user()->followed($question->id) ? '取消关注'  : '关注'}}
+                    </a>--}}
                         <question-follow-button question="{{$question->id}}"></question-follow-button>
                         <a href="#container" class="btn btn-primary">撰写答案</a>
                     </div>
@@ -89,6 +89,43 @@
                        @else
                             <a href="/login" class="btn btn-success btn-block">未登录？点击登录</a>
                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="div col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading question-follow">
+                        <h5>关于作者</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img width="36" src="{{$question->user->avatar}}" alt="{{$question->user->name}}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="#">
+                                        {{$question->user->name}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="statics-item text-center">
+                                <div class="statics-text">问题</div>
+                                <div class="statics-count">{{ $question->user->questions_count }}</div>
+                            </div>
+                            <div class="statics-item text-center">
+                                <div class="statics-text">回答</div>
+                                <div class="statics-count">{{ $question->user->answers_count }}</div>
+                            </div>
+                            <div class="statics-item text-center">
+                                <div class="statics-text">关注者</div>
+                                <div class="statics-count">{{ $question->user->followers_count }}</div>
+                            </div>
+                        </div>
+                        <question-follow-button question="{{$question->id}}"></question-follow-button>
+                        <a href="#container" class="btn btn-default">发送私信</a>
                     </div>
                 </div>
             </div>

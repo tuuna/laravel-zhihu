@@ -1,6 +1,5 @@
 <?php
 
-use App\Follow;
 use App\Question;
 use App\Topic;
 use Illuminate\Http\Request;
