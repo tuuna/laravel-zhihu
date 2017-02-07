@@ -41880,11 +41880,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    props: ['question', 'user'],
+    props: ['question'],
     mounted: function mounted() {
         var _this = this;
 
-        this.$http.post('/api/question/follower', { 'question': this.question, 'user': this.user }).then(function (response) {
+        this.$http.post('/api/question/follower', { 'question': this.question }).then(function (response) {
             _this.followed = response.data.followed;
         });
     },
@@ -41903,7 +41903,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         follow: function follow() {
             var _this2 = this;
 
-            this.$http.post('/api/question/follow', { 'question': this.question, 'user': this.user }).then(function (response) {
+            this.$http.post('/api/question/follow', { 'question': this.question }).then(function (response) {
                 _this2.followed = response.data.followed;
             });
         }
@@ -41936,6 +41936,12 @@ __webpack_require__(43);
 
 window.Vue = __webpack_require__(36);
 __webpack_require__(31);
+
+Vue.http.interceptors.push(function (request, next) {
+  request.headers.set('Authorization', Laravel.apiToken);
+
+  next();
+});
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

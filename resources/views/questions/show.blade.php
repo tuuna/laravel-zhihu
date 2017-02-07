@@ -31,7 +31,7 @@
             <div class="div col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading question-follow">
-                        <h2>{{ Auth::user()->followed($question->id) }}</h2>
+                        <h2>{{ $question->followers_count }}</h2>
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
@@ -39,7 +39,7 @@
                            class="btn btn-default {{ Auth::user()->followed($question->id) ? 'btn-success' : '' }}">
                             {{ Auth::user()->followed($question->id) ? '取消关注'  : '关注'}}
                         </a>--}}
-                        <question-follow-button question="{{$question->id}}" user="{{Auth::id()}}"></question-follow-button>
+                        <question-follow-button question="{{$question->id}}"></question-follow-button>
                         <a href="#container" class="btn btn-primary">撰写答案</a>
                     </div>
                 </div>

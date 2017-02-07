@@ -21,6 +21,12 @@ require('./select2.min.js');
 window.Vue = require('vue');
 require('vue-resource');
 
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('Authorization',Laravel.apiToken);
+
+    next();
+});
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
