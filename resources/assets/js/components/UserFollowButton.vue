@@ -4,10 +4,10 @@
 
 <script>
     export default{
-        props:['question'],
+        props:['user'],
         mounted() {
             this.$http.post('/api/user/followers',
-            { 'question':this.question })
+            { 'user':this.user })
                 .then(response => {
                     this.followed = response.data.followed
                 })
@@ -25,7 +25,7 @@
         },
         methods:{
             follow() {
-                this.$http.post('/api/user/follow',{ 'question':this.question })
+                this.$http.post('/api/user/follow',{ 'user':this.user })
                     .then(response => {
                         this.followed = response.data.followed
                     })
