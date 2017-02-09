@@ -7,6 +7,6 @@ class SendEmailChannel
 {
     public function send($notifiable,Notification $notification)
     {
-        $message = $notifiable->toSend($notification);
+        $message = $notification->toSend($notifiable);
     }
 }
