@@ -34,6 +34,6 @@ class UserMailer extends Mailer
             'url' => route('email.verify',['token' => $user->confirmation_token]),
             'name' => $user->name
         ];
-        $this->sendTo('emails.test',$user->email,'请激活您的邮件');
+        $this->sendTo('emails.test',$data,$user->email,'请激活您的邮件');
     }
 }
