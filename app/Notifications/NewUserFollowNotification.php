@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Channels\SendEmailChannel;
+use App\Mailer\UserMailer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,18 +38,9 @@ class NewUserFollowNotification extends Notification
 
     public function toSend($notifiable)
     {
-        $data = [
-            'url' => 'http://localhost:8000',
-            'name' => Auth::guard('api')->user()->name
-        ];
-        Mail::send(
-            "emails.notice",
-            $data,
-            function($message) use ($notifiable) {
-                $message->to($notifiable->email)
-                    ->subject(Auth::guard('api')->user()->name."用户关注了您");
-            }
-        );
+        (new UserMailer())->followNotifyEmail(
+            $notifiable->email,
+            Auth::guard('api')->user()->name."用户关注了您");
     }
 
     public function toDatabase($notifiable)

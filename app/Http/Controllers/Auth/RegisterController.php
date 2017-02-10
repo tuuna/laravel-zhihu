@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mailer\UserMailer;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -78,18 +79,7 @@ class RegisterController extends Controller
 
     private function sendVerifyEmailTo($user)
     {
-        $data = [
-            'url' => route('email.verify',['token' => $user->confirmation_token]),
-            'name' => $user->name
-        ];
-        Mail::send(
-            "emails.test",
-            $data,
-            function($message) use($user) {
-                $message->to($user->email)
-                        ->subject("这是一封最终的测试邮件");
-            }
-        );
+        (new UserMailer())->welcome($user);
     }
 
 

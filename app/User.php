@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mailer\UserMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -74,16 +75,6 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $data = [
-            'url' => url('password/reset',$token)
-        ];
-        Mail::send(
-            "emails.reset",
-            $data,
-            function($message) {
-                $message->to($this->email)
-                    ->subject("这是一封最终的测试邮件");
-            }
-        );
+        (new UserMailer())->passwordReset($token, $this->email, '请激活邮件');
     }
 }
