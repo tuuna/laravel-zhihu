@@ -83,6 +83,10 @@ class User extends Authenticatable
         return !! $this->votes()->where('answer_id',$answer)->count();
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'to_user_id');
+    }
     public function answers()
     {
         return $this->hasMany(Answer::class);
