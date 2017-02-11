@@ -10,6 +10,11 @@ class AnswerRepository
         return Answer::create($attributes);
     }
 
+    public function byId($id)
+    {
+        return Answer::find($id);
+    }
+
     public function addAnswerCount($query)
     {
         return $query->question()->increment('answers_count');

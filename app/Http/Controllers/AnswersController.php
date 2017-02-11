@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\StoreAnswerRequest;
 use App\Repositories\AnswerRepository;
 use Illuminate\Support\Facades\Auth;
 
-class AnswerController extends Controller
+class AnswersController extends Controller
 {
     protected $answer;
 
@@ -24,7 +24,7 @@ class AnswerController extends Controller
      * @param $question
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreQuestionRequest $request,$question)
+    public function store(StoreAnswerRequest $request,$question)
     {
         $answer = $this->answer->create([
             'question_id' => $question,
