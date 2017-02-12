@@ -18,13 +18,14 @@
                             <div class="media" v-for="comment in comments">
                                 <div class="media-left">
                                     <a href="#">
-                                        <img class="media-object" :src="comment.user.avatar" :alt="comment.user.name">
+                                        <img width="24" class="media-object" :src="comment.user.avatar" :alt="comment.user.name">
                                     </a>
                                 </div>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">{{comment.user.name}}</h4>
-                                {{comment.body}}
+
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{comment.user.name}}</h4>
+                                    {{comment.body}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,7 +49,14 @@
         data() {
             return {
                 body:'',
-                comments:[]
+                comments:[],
+                newComment:{
+                    user:{
+                        name:Zhihu.name,
+                        avatar:Zhihu.avatar
+                    },
+                    body:{}
+                }
             }
         },
         computed:{
@@ -64,13 +72,12 @@
         },
         methods:{
             store() {
-                this.$http.post('/api/messages/store',{'user':this.user,'body':this.body})
+                this.$http.post('/api/comment',{'type':this.type,'id':this.id,'body':this.body})
                     .then(response => {
-                        this.status = response.data.status
+                        this.count++
+                        this.newComment.body = response.data.body
+                        this.comments.push(this.newComment)
                         this.body = ''
-                        setTimeout(function() {
-                            $('#modal-send-message').modal('hide')
-                        },2000)
                     })
             },
             showCommentsForm() {
@@ -80,7 +87,7 @@
             getComments() {
                 this.$http.get('/api/' + this.type + '/' + this.id + '/comments')
                 .then(response => {
-
+                    this.comments = response.data
                 })
             }
         },
