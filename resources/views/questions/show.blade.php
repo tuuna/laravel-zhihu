@@ -23,7 +23,7 @@
                                 <button class="button is-naked delete-button">删除</button>
                             </form>
                         @endif
-                        <comments type="question" id="{{$question->id}}" count="{{$question->comments_count}}"></comments>
+                        <comments type="question" id="{{$question->id}}" count="{{$question->comments()->count()}}"></comments>
                     </div>
                 </div>
 
