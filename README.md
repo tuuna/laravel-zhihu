@@ -28,5 +28,11 @@ $ npm install npm@latest -g
 $ cnpm install cnpm@latest -g
 ```
 
+- 布置到本地，数据库需要migrate
+
+```
+$ php artisan migrate
+```
+
 
 
