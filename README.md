@@ -28,11 +28,10 @@ $ npm install npm@latest -g
 $ cnpm install cnpm@latest -g
 ```
 
-- 布置到本地，数据库需要migrate
+- 布置到本地，需要安装所需的包，数据库需要migrate
 
 ```
+$ composer install
 $ php artisan migrate
 ```
-
-
-
+  - 然后更改.env.example
